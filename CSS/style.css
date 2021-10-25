@@ -7,8 +7,9 @@ html, body {
     box-sizing: border-box;
 }
 
+
 body {
-    background-color: #333;
+    background-color: black;
     display: flex;
     color: #fff;
     flex-direction: column;
@@ -23,12 +24,12 @@ body {
 #container {
     max-width: 50em;
     margin: 0 auto;
-    padding: 1em;
+    padding: 2em;
     grid-gap: 1em;
     display: grid;
     grid-template-rows: .25fr .5fr .25fr;
     grid-template-columns: .25fr .5fr .25fr;
-    grid-template-areas: "length-of-snake length-of-snake objective"
+    grid-template-areas: "length-of-snake objective objective"
                          "game game game"
                          "btm btm btm";
 }

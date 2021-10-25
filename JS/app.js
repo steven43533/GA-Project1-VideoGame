@@ -6,6 +6,9 @@ const ctx = canvas.getContext('2d')
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 
+// state of game
+let isGameActive = true
+
 // start game button var
 const startButton = document.getElementById('startButton')
 
@@ -34,6 +37,21 @@ let announcer = document.getElementById('announcer')
 
 // reset game button
 
+// constructor for snakes food
+function snakeFood(x, y, color, width, height) {
+    this.x = x
+    this.y = y
+    this.color = color
+    this.width = width
+    this.height = height
+    this.appleNotAte = true
+
+    this.placeFood = function () {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+}
+
 // constructor for snake
 function snake(x, y, color, width, height) {
     this.x = x
@@ -51,7 +69,13 @@ function snake(x, y, color, width, height) {
 }
 
 let playerSnake = new snake(centerX, centerY, '#008000', 30, 30)
+let food = new snakeFood(Math.floor(Math.random() * 700), Math.floor(Math.random() * 300), '#DC143C', 20, 20)
 
+// function to make food appear in random spots
+
+let rngPlaceFood = () => {
+    
+}
 
 
 // switch case to detect movement
@@ -59,33 +83,61 @@ let playerSnake = new snake(centerX, centerY, '#008000', 30, 30)
 let snakeMovement = (e) => {
     switch (e.key) {
         case 'w':
-        playerSnake.y -= 30    
+        playerSnake.y -= 30
+        if(playerSnake.y <= 0) {
+            playerSnake.y = 0
+        }
             break;
     
         case 'a':
-            playerSnake.x -=30
+            playerSnake.x -=30 
+            if(playerSnake.x <= 0){
+                playerSnake.x = 0
+            }
+            
             break;
         
         case 's':
             playerSnake.y += 30
+            if(playerSnake.y + playerSnake.height >= canvas.height){
+                playerSnake.y = canvas.height - playerSnake.height
+            }
             break;
         
         case 'd':
             playerSnake.x += 30
+            if(playerSnake.x + playerSnake.width >= canvas.width){
+                playerSnake.x = canvas.width - playerSnake.width
+            }
             break;
 
     }
 }
 
-
-const gameLoop = () => {
-    if(playerSnake.alive) {
-        playerSnake.spawn()
+const appleAte = () => {
+    if(
+        playerSnake.x < food.x + food.width &&
+        playerSnake.x + playerSnake.width > food.x &&
+        playerSnake.y < food.y + food.height &&
+        playerSnake.y + playerSnake.height > food.y
+    ) {
+        rngPlaceFood()
     }
+}
+console.log(appleAte());
+const gameLoop = () => {
+    if(food.appleNotAte) {
+        food.placeFood()
+        appleAte()
+    }
+
+    playerSnake.spawn()
 }
 
 
-// constructor for snakes food
+
+
+
 
 // render snakes food on canvas
 
