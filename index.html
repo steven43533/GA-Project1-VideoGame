@@ -15,16 +15,19 @@
     </head>
     <body>
         <h1>Snake Game</h1>
-        <h2 id="announcer">Announcer Text:</h2>
-        <button type="button" id="startButton" class="btn btn-info btn-lg btn-block">Start</button>
-        <button type="button" id="resetButton" class="btn btn-lg btn-warning">Reset Game</button>
-
-
-
-        <!-- Canvas -->
-        <canvas id="canvas" width="1200" height="800"></canvas>
-        <!-- Canvas -->
-        
+        <div id="container">
+            <aside id="length-of-snake"><h2>Length: </h2></aside>
+            <aside id="objective"><h2>Eat the food! Grow in length!</h2></aside>
+            <!-- Canvas -->
+            <main>
+                <canvas id="canvas" width="900" height="500"></canvas>
+            </main>
+            <!-- Canvas -->
+            <div class="bothButtons text-center">
+                <button type="button" id="startButton" class="btn btn-info btn-lg btn-block">Start</button>
+                <button type="button" id="resetButton" class="btn btn-lg btn-warning">Reset</button>
+            </div>
+        </div>
         <script src="JS/app.js"></script>
     </body>
 </html>

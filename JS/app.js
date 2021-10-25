@@ -11,6 +11,13 @@ const startButton = document.getElementById('startButton')
 
 // reset button var
 const resetButton = document.getElementById('resetButton')
+
+// variables for center of canvas
+let centerX = canvas.width / 2
+let centerY = canvas.height / 2
+
+console.log(centerX);
+console.log(centerY);
 // startButton EL
 //startButton.addEventListener('click', )
 
@@ -28,9 +35,54 @@ let announcer = document.getElementById('announcer')
 // reset game button
 
 // constructor for snake
+function snake(x, y, color, width, height) {
+    this.x = x
+    this.y = y
+    this.color = color
+    this.width = width
+    this.height = height
+    this.alive = true
+
+    this.spawn = function () {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x,this.y,this.width,this.height)
+    }
+
+}
+
+let playerSnake = new snake(centerX, centerY, '#008000', 30, 30)
+
+
 
 // switch case to detect movement
 
+let snakeMovement = (e) => {
+    switch (e.key) {
+        case 'w':
+        playerSnake.y -= 30    
+            break;
+    
+        case 'a':
+            playerSnake.x -=30
+            break;
+        
+        case 's':
+            playerSnake.y += 30
+            break;
+        
+        case 'd':
+            playerSnake.x += 30
+            break;
+
+    }
+}
+
+
+const gameLoop = () => {
+    if(playerSnake.alive) {
+        playerSnake.spawn()
+    }
+}
 
 
 // constructor for snakes food
@@ -45,5 +97,9 @@ let announcer = document.getElementById('announcer')
 
 // function/rule so that snake can't go backwards(eat itself)
 
+// eventL for snake movement
+document.addEventListener('keydown', snakeMovement)
+
+let gameInterval = setInterval(gameLoop, 50)
 
 
