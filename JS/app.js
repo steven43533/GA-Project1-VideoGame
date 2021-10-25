@@ -19,6 +19,10 @@ const resetButton = document.getElementById('resetButton')
 let centerX = canvas.width / 2
 let centerY = canvas.height / 2
 
+// rng x and y coords
+let x = Math.floor(Math.random() * 700)
+let y = Math.floor(Math.random() * 300)
+
 console.log(centerX);
 console.log(centerY);
 // startButton EL
@@ -36,6 +40,8 @@ let announcer = document.getElementById('announcer')
 // upon game ending announcer box showing players stats 
 
 // reset game button
+
+// place initial food
 
 // constructor for snakes food
 function snakeFood(x, y, color, width, height) {
@@ -66,15 +72,20 @@ function snake(x, y, color, width, height) {
         ctx.fillRect(this.x,this.y,this.width,this.height)
     }
 
+    // method to remove food
+    this.removeFood = function () {
+        // 
+    }
+
 }
 
 let playerSnake = new snake(centerX, centerY, '#008000', 30, 30)
-let food = new snakeFood(Math.floor(Math.random() * 700), Math.floor(Math.random() * 300), '#DC143C', 20, 20)
-
+let food = new snakeFood(x, y, '#DC143C', 20, 20)
+food.placeFood()
 // function to make food appear in random spots
 
 let rngPlaceFood = () => {
-    
+    food.placeFood
 }
 
 
@@ -114,21 +125,24 @@ let snakeMovement = (e) => {
     }
 }
 
-const appleAte = () => {
+const detectAppleAte = () => {
     if(
         playerSnake.x < food.x + food.width &&
         playerSnake.x + playerSnake.width > food.x &&
         playerSnake.y < food.y + food.height &&
         playerSnake.y + playerSnake.height > food.y
     ) {
-        rngPlaceFood()
+        let newX = Math.floor(Math.random() * 700)
+        let newY = Math.floor(Math.random() * 300)
+        food = new snakeFood(newX, newY, '#DC143C', 20, 20)
+        food.placeFood()
     }
 }
-console.log(appleAte());
+
 const gameLoop = () => {
     if(food.appleNotAte) {
-        food.placeFood()
-        appleAte()
+        
+        detectAppleAte()
     }
 
     playerSnake.spawn()
