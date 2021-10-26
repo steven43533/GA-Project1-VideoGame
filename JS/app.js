@@ -56,6 +56,11 @@ function snakeFood(x, y, color, width, height) {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.width, this.height)
     }
+
+    // method to remove food
+    this.removeFood = function () {
+        void ctx.clearRect(this.x, this.y, this.width, this.height)
+    }
 }
 
 // constructor for snake
@@ -72,21 +77,20 @@ function snake(x, y, color, width, height) {
         ctx.fillRect(this.x,this.y,this.width,this.height)
     }
 
-    // method to remove food
-    this.removeFood = function () {
-        // 
-    }
+    
 
 }
-
+// instantiate player
 let playerSnake = new snake(centerX, centerY, '#008000', 30, 30)
+// instantiate food
 let food = new snakeFood(x, y, '#DC143C', 20, 20)
+// place initial food
 food.placeFood()
 // function to make food appear in random spots
 
-let rngPlaceFood = () => {
-    food.placeFood
-}
+// let rngPlaceFood = () => {
+//     food.placeFood
+// }
 
 
 // switch case to detect movement
@@ -132,6 +136,8 @@ const detectAppleAte = () => {
         playerSnake.y < food.y + food.height &&
         playerSnake.y + playerSnake.height > food.y
     ) {
+        
+        food.removeFood()
         let newX = Math.floor(Math.random() * 700)
         let newY = Math.floor(Math.random() * 300)
         food = new snakeFood(newX, newY, '#DC143C', 20, 20)
