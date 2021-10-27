@@ -8,6 +8,9 @@ let lengthValueDom = document.getElementById('length-of-snake')
 // score counter
 let lengthCounter = 2;
 
+// apple ate audio
+audioObj = new Audio("audioStuff/munch.mp3")
+
 // snake constructor 
 class snakePiece{
     constructor(x,y){
@@ -28,10 +31,10 @@ let headX = 10
 let headY = 10
 
 // apple cords
-let appleX = 10
-let appleY = 10
+let appleX = 5
+let appleY = 5
 
-// snakeSpeed 
+// snekSpeed 
 let yVel = 0
 let xVel = 0
 
@@ -54,10 +57,7 @@ const resetButton = document.getElementById('resetButton')
 // resetButton EL
 //resetButton.addEventListener('click', )
 
-// variable for announcer 
-let announcer = document.getElementById('announcer')
 
-// upon game ending announcer box showing players stats 
 
 // reset game button
 
@@ -69,7 +69,7 @@ function gameLoop() {
     spawnApple()
     spawnSnake()
     lengthValueDom.innerText = `Length: ${lengthCounter}`
-    setTimeout(gameLoop, 60)
+    setTimeout(gameLoop, 200)
     
 } 
 
@@ -117,6 +117,7 @@ function detectAppleAte() {
         appleY = Math.floor(Math.random() * tileCount) 
         snakeLength++
         lengthCounter++
+        audioObj.play()
     }
 }
 
