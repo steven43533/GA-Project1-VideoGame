@@ -7,11 +7,17 @@ let snakeLength = 3
 let tailSize = snakeLength
 let snakeTrail = []
 
-// initial snake variables to add on and have persistent movement
+// set tile size
 let tileCount = 20
 let tileSize = canvas.width / tileCount - 2
+
+// initial snake variables
 let headX = 10
 let headY = 10
+
+// apple cords
+let appleX = 10
+let appleY = 10
 
 // snakeSpeed 
 let yVel = 0
@@ -52,40 +58,23 @@ let announcer = document.getElementById('announcer')
 
 // reset game button
 
+// main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
     clearScreen()
     snakePosition()
     spawnSnake()
+    detectAppleAte()
+    spawnApple()
     setTimeout(gameLoop, 60)
     
 } 
 
+// updates the screen every time gameloop is called so snake moves correctly
 function clearScreen() {
     ctx.fillStyle = "white"
     ctx.fillRect(0,0,canvas.width,canvas.height)
 }
 
-
-
-// constructor for snakes food
-function snakeFood(x, y, color, width, height) {
-    this.x = x
-    this.y = y
-    this.color = color
-    this.width = width
-    this.height = height
-    this.appleNotAte = true
-
-    this.placeFood = function () {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
-    }
-
-    // method to remove food
-    this.removeFood = function () {
-        void ctx.clearRect(this.x, this.y, this.width, this.height)
-    }
-}
 
 
 // constructor for snake
@@ -94,17 +83,19 @@ function spawnSnake(){
     ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize)
 }
 
+// updates the snake position depending on last key pressed
 function snakePosition() {
     headX = headX + xVel
     headY = headY + yVel
 }
 
+// creates red apple
+function spawnApple() {
+    ctx.fillStyle = "red"
+    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize/1.5, tileSize/1.5)
+}
 
 
-// instantiate food
-let food = new snakeFood(x, y, '#DC143C', 20, 20)
-// place initial food
-food.placeFood()
 
 
 // eventL for snake movement
@@ -150,20 +141,12 @@ function snakeMovement(e) {
 
 
 
-
-const detectAppleAte = () => {
-    if(
-        playerSnake.x < food.x + food.width &&
-        playerSnake.x + playerSnake.width > food.x &&
-        playerSnake.y < food.y + food.height &&
-        playerSnake.y + playerSnake.height > food.y
-    ) {
+// checks to see if the snakehead has collided with an apple and moves apple to new position upon true
+function detectAppleAte() {
+    if(appleX == headX && appleY == headY){
+        appleX = Math.floor(Math.random() * tileCount)
+        appleY = Math.floor(Math.random() * tileCount)
         
-        food.removeFood()
-        let newX = Math.floor(Math.random() * 700)
-        let newY = Math.floor(Math.random() * 300)
-        food = new snakeFood(newX, newY, '#DC143C', 20, 20)
-        food.placeFood()
     }
 }
 
