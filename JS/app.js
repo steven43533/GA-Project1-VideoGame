@@ -52,6 +52,20 @@ let announcer = document.getElementById('announcer')
 
 // reset game button
 
+function gameLoop() {
+    clearScreen()
+    snakePosition()
+    spawnSnake()
+    setTimeout(gameLoop, 60)
+    
+} 
+
+function clearScreen() {
+    ctx.fillStyle = "white"
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+}
+
+
 
 // constructor for snakes food
 function snakeFood(x, y, color, width, height) {
@@ -75,9 +89,14 @@ function snakeFood(x, y, color, width, height) {
 
 
 // constructor for snake
-function snake() {
-    ctx.fillStyle = "yellow"
-    ctx.fillRect = (headX * tileCount, headY * tileCount, tileSize, tileSize)
+function spawnSnake(){
+    ctx.fillStyle = "blue"
+    ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize)
+}
+
+function snakePosition() {
+    headX = headX + xVel
+    headY = headY + yVel
 }
 
 
@@ -87,9 +106,13 @@ let food = new snakeFood(x, y, '#DC143C', 20, 20)
 // place initial food
 food.placeFood()
 
-// switch case to detect movement
 
-let snakeMovement = (e) => {
+// eventL for snake movement
+document.addEventListener('keydown', snakeMovement)
+
+
+// switch case to detect movement
+function snakeMovement(e) {
     switch (e.key) {
         case 'w':
             if(yVel == 1)
@@ -99,7 +122,7 @@ let snakeMovement = (e) => {
             break;
     
         case 'a':
-            if(xVel = 1)
+            if(xVel == 1)
                 return;
             yVel = 0
             xVel = -1
@@ -124,10 +147,9 @@ let snakeMovement = (e) => {
     }
 }
 
-let snakePosition = () => {
-    headX = headX + xVel
-    headY = headY + yVel
-}
+
+
+
 
 const detectAppleAte = () => {
     if(
@@ -144,25 +166,6 @@ const detectAppleAte = () => {
         food.placeFood()
     }
 }
-
-const gameLoop = () => {
-
-    snake()
-    snakePosition()
-    setInterval(gameLoop, 50)
-    
-} 
-
-
-
-
-
-
-
-// function/rule so that snake can't go backwards(eat itself)
-
-// eventL for snake movement
-document.addEventListener('keydown', snakeMovement)
 
 // setInterval to keep the game going
 gameLoop()
