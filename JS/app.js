@@ -2,7 +2,11 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+// grab length box html to maniupate as counter increases
+let lengthValueDom = document.getElementById('length-of-snake')
 
+// score counter
+let lengthCounter = 2;
 
 // snake constructor 
 class snakePiece{
@@ -14,7 +18,6 @@ class snakePiece{
 // var holding length of snake
 const snakePieces = []
 let snakeLength = 2
-
 
 // set tile size
 let tileCount = 20
@@ -45,8 +48,6 @@ const startButton = document.getElementById('startButton')
 // reset button var
 const resetButton = document.getElementById('resetButton')
 
-
-
 // startButton EL
 //startButton.addEventßListener('click', )
 
@@ -55,9 +56,6 @@ const resetButton = document.getElementById('resetButton')
 
 // variable for announcer 
 let announcer = document.getElementById('announcer')
-
-
-
 
 // upon game ending announcer box showing players stats 
 
@@ -70,6 +68,7 @@ function gameLoop() {
     detectAppleAte()
     spawnApple()
     spawnSnake()
+    lengthValueDom.innerText = `Length: ${lengthCounter}`
     setTimeout(gameLoop, 60)
     
 } 
@@ -80,12 +79,9 @@ function clearScreen() {
     ctx.fillRect(0,0,canvas.width,canvas.height)
 }
 
-
-
 // constructor for snake and also adds on to the snake length upon apple being ate
 function spawnSnake(){
     
-
     ctx.fillStyle = "green"
     for (let i = 0; i < snakePieces.length; i++) {
         let part = snakePieces[i]
@@ -120,15 +116,12 @@ function detectAppleAte() {
         appleX = Math.floor(Math.random() * tileCount)
         appleY = Math.floor(Math.random() * tileCount) 
         snakeLength++
+        lengthCounter++
     }
 }
 
-
-
-
 // eventL for snake movement
 document.addEventListener('keydown', snakeMovement)
-
 
 // switch case to detect movement
 function snakeMovement(e) {
@@ -165,11 +158,6 @@ function snakeMovement(e) {
             console.log("Wrong key bub");
     }
 }
-
-
-
-
-
 
 // setInterval to keep the game going
 gameLoop()
