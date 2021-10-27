@@ -2,10 +2,19 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+
+
+// snake constructor 
+class snakePiece{
+    constructor(x,y){
+        this.x = x
+        this.y = y
+    }
+}
 // var holding length of snake
-let snakeLength = 3
-let tailSize = snakeLength
-let snakeTrail = []
+const snakePieces = []
+let snakeLength = 2
+
 
 // set tile size
 let tileCount = 20
@@ -37,10 +46,6 @@ const startButton = document.getElementById('startButton')
 const resetButton = document.getElementById('resetButton')
 
 
-// rng x and y coords
-let x = Math.floor(Math.random() * 700)
-let y = Math.floor(Math.random() * 300)
-
 
 // startButton EL
 //startButton.addEventßListener('click', )
@@ -62,9 +67,9 @@ let announcer = document.getElementById('announcer')
 function gameLoop() {
     clearScreen()
     snakePosition()
-    spawnSnake()
     detectAppleAte()
     spawnApple()
+    spawnSnake()
     setTimeout(gameLoop, 60)
     
 } 
@@ -77,8 +82,22 @@ function clearScreen() {
 
 
 
-// constructor for snake
+// constructor for snake and also adds on to the snake length upon apple being ate
 function spawnSnake(){
+    
+
+    ctx.fillStyle = "green"
+    for (let i = 0; i < snakePieces.length; i++) {
+        let part = snakePieces[i]
+        ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize)
+        
+    }
+
+    snakePieces.push(new snakePiece(headX, headY))
+    while(snakePieces.length > snakeLength){
+        snakePieces.shift()
+    }
+
     ctx.fillStyle = "blue"
     ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize)
 }
@@ -93,6 +112,15 @@ function snakePosition() {
 function spawnApple() {
     ctx.fillStyle = "red"
     ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize/1.5, tileSize/1.5)
+}
+
+// checks to see if the snakehead has collided with an apple and moves apple to new position upon true
+function detectAppleAte() {
+    if(appleX == headX && appleY == headY){
+        appleX = Math.floor(Math.random() * tileCount)
+        appleY = Math.floor(Math.random() * tileCount) 
+        snakeLength++
+    }
 }
 
 
@@ -141,14 +169,7 @@ function snakeMovement(e) {
 
 
 
-// checks to see if the snakehead has collided with an apple and moves apple to new position upon true
-function detectAppleAte() {
-    if(appleX == headX && appleY == headY){
-        appleX = Math.floor(Math.random() * tileCount)
-        appleY = Math.floor(Math.random() * tileCount)
-        
-    }
-}
+
 
 // setInterval to keep the game going
 gameLoop()
