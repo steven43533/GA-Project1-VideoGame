@@ -12,7 +12,7 @@ const resetButton = document.getElementById('resetButton')
 let lengthValueDom = document.getElementById('length-of-snake')
 
 // score counter
-let lengthCounter = 2;
+let lengthCounter = 0;
 
 // apple ate audio
 audioObj = new Audio("audioStuff/munch.mp3")
@@ -26,7 +26,7 @@ class snakePiece{
 }
 // var holding length of snake
 const snakePieces = []
-let snakeLength = 2
+let snakeLength = 0
 
 // set tile size
 let tileCount = 20
@@ -61,7 +61,7 @@ isGameOver = false
 // }
 
 // resetButton EL
-//resetButton.addEventListener('click', )
+resetButton.addEventListener('click', resetGame)
 
 
 
@@ -70,16 +70,17 @@ isGameOver = false
 // main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
     checkForGameOver()
+    checkForSnakeAteItself()
     clearScreen()
     snakePosition()
-    checkForSnakeAteItself()
     detectAppleAte()
     spawnApple()
     spawnSnake()
     lengthValueDom.innerText = `Length: ${lengthCounter}`
 
     if(isGameOver == false) {
-        timeOut = setTimeout(gameLoop, 200)
+        // snake speed 
+        timeOut = setTimeout(gameLoop, 100)
     } else {
         console.log('Game over!');
     }
@@ -90,7 +91,18 @@ function gameLoop() {
 
 
 
-
+// resets the game upon reset button being pressed
+function resetGame() {
+    isGameOver = false
+    xVel = 0
+    yVel = 0
+    lengthCounter = 0
+    headY = 10
+    headX = 10
+    snakeLength = 0
+    gameLoop()
+    console.log("Reset Button clicked");
+}
 // updates the screen every time gameloop is called so snake moves correctly
 function clearScreen() {
     ctx.fillStyle = "white"
@@ -129,6 +141,7 @@ function spawnApple() {
 }
 
 // checks to see if the snakehead has collided with an apple and moves apple to new position upon true
+// TODO: Improve hit detect of snake head eating apple, not 100% accurate atm.
 function detectAppleAte() {
     if(appleX == headX && appleY == headY){
         appleX = Math.floor(Math.random() * tileCount)
@@ -139,10 +152,15 @@ function detectAppleAte() {
     }
 }
 
+// TODO: Fix function to actually do what its suppose to do
 function checkForSnakeAteItself() {
-    if(headX * tileCount + tileSize == snakePieces.x * tileCount + tileSize || headY * tileCount + tileSize == snakePieces.y * tileCount + tileSize) {
-            console.log("Snake ate itself, ded");
-        }
+    for (let i = 1; i < snakePieces.length; i++) {
+        if(headX === snakePieces[i].x && 
+            headY === snakePieces[i].y) {
+                console.log("Snake ate itself");
+            }
+        
+    }
 }
 
 function checkForGameOver() {
@@ -150,7 +168,6 @@ function checkForGameOver() {
         headY < 0 || headX < 0){
         console.log("Hit a wall!")
         isGameOver = true
-        console.log(isGameOver);
     } 
     
 }
