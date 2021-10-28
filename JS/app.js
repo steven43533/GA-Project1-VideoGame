@@ -2,6 +2,12 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+// start button 
+const startButton = document.getElementById('startButton')
+
+// reset button
+const resetButton = document.getElementById('resetButton')
+
 // grab length box html to maniupate as counter increases
 let lengthValueDom = document.getElementById('length-of-snake')
 
@@ -45,14 +51,14 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 // state of game, always start as false until hit a wall/or self cannibalized
 isGameOver = false
 
-// start game button var
-const startButton = document.getElementById('startButton')
 
-// reset button var
-const resetButton = document.getElementById('resetButton')
 
 // startButton EL
-//startButton.addEventßListener('click', )
+// startButton.addEventListener('click', startButtonPressed)
+
+// function startButtonPressed() {
+//     isGameOver = false
+// }
 
 // resetButton EL
 //resetButton.addEventListener('click', )
@@ -66,13 +72,14 @@ function gameLoop() {
     checkForGameOver()
     clearScreen()
     snakePosition()
+    checkForSnakeAteItself()
     detectAppleAte()
     spawnApple()
     spawnSnake()
     lengthValueDom.innerText = `Length: ${lengthCounter}`
 
     if(isGameOver == false) {
-    let timeOut = setTimeout(gameLoop, 200)
+        timeOut = setTimeout(gameLoop, 200)
     } else {
         console.log('Game over!');
     }
@@ -132,9 +139,15 @@ function detectAppleAte() {
     }
 }
 
+function checkForSnakeAteItself() {
+    if(headX * tileCount + tileSize == snakePieces.x * tileCount + tileSize || headY * tileCount + tileSize == snakePieces.y * tileCount + tileSize) {
+            console.log("Snake ate itself, ded");
+        }
+}
+
 function checkForGameOver() {
-    if(headX * tileCount + tileSize >= canvas.width || headY * tileCount + tileSize >= canvas.height ||
-        headY <= 0 || headX <= 0){
+    if(headX * tileCount + tileSize > canvas.width + 10|| headY * tileCount + tileSize > canvas.height + 10||
+        headY < 0 || headX < 0){
         console.log("Hit a wall!")
         isGameOver = true
         console.log(isGameOver);
