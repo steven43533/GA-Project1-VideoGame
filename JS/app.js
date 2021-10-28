@@ -42,8 +42,8 @@ let xVel = 0
 canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 
-// state of game
-let isGameActive = true
+// state of game, always start as false until hit a wall/or self cannibalized
+isGameOver = false
 
 // start game button var
 const startButton = document.getElementById('startButton')
@@ -63,15 +63,26 @@ const resetButton = document.getElementById('resetButton')
 
 // main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
+    checkForGameOver()
     clearScreen()
     snakePosition()
     detectAppleAte()
     spawnApple()
     spawnSnake()
     lengthValueDom.innerText = `Length: ${lengthCounter}`
-    setTimeout(gameLoop, 200)
+
+    if(isGameOver == false) {
+    let timeOut = setTimeout(gameLoop, 200)
+    } else {
+        console.log('Game over!');
+    }
+    
     
 } 
+
+
+
+
 
 // updates the screen every time gameloop is called so snake moves correctly
 function clearScreen() {
@@ -107,7 +118,7 @@ function snakePosition() {
 // creates red apple
 function spawnApple() {
     ctx.fillStyle = "red"
-    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize/1.5, tileSize/1.5)
+    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize/2, tileSize/2)
 }
 
 // checks to see if the snakehead has collided with an apple and moves apple to new position upon true
@@ -119,6 +130,16 @@ function detectAppleAte() {
         lengthCounter++
         audioObj.play()
     }
+}
+
+function checkForGameOver() {
+    if(headX * tileCount + tileSize >= canvas.width || headY * tileCount + tileSize >= canvas.height ||
+        headY <= 0 || headX <= 0){
+        console.log("Hit a wall!")
+        isGameOver = true
+        console.log(isGameOver);
+    } 
+    
 }
 
 // eventL for snake movement
@@ -160,7 +181,13 @@ function snakeMovement(e) {
     }
 }
 
-// setInterval to keep the game going
+
+
 gameLoop()
+console.log("Game active!");
+
+
+// switch around the boolean values 
+// 
 
 
