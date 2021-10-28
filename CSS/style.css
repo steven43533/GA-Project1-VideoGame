@@ -63,9 +63,9 @@ main {
     grid-area: btm;
 }
 
-/* #startButton {
+#startButton {
     border: none;
-    background: green;
+    background: blanchedalmond;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -74,4 +74,4 @@ main {
     -webkit-transform: translate(-50%,-50%);
     -moz-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
-} */
+}

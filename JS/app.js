@@ -2,8 +2,8 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
-// start button 
-const startButton = document.getElementById('startButton')
+// announcer 
+let announcer = document.getElementById('announcer')
 
 // reset button
 const resetButton = document.getElementById('resetButton')
@@ -54,18 +54,14 @@ isGameOver = false
 
 
 // startButton EL
-// startButton.addEventListener('click', startButtonPressed)
 
-// function startButtonPressed() {
-//     isGameOver = false
-// }
 
 // resetButton EL
 resetButton.addEventListener('click', resetGame)
 
 
 
-// reset game button
+
 
 // main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
@@ -93,6 +89,7 @@ function gameLoop() {
 
 // resets the game upon reset button being pressed
 function resetGame() {
+    announcer.innerText = "Press any movement key to start!"
     isGameOver = false
     xVel = 0
     yVel = 0
@@ -166,8 +163,8 @@ function checkForSnakeAteItself() {
 function checkForGameOver() {
     if(headX * tileCount + tileSize > canvas.width + 10|| headY * tileCount + tileSize > canvas.height + 10||
         headY < 0 || headX < 0){
-        console.log("Hit a wall!")
         isGameOver = true
+        announcer.innerText ="Game over! Press reset to try again."
     } 
     
 }
