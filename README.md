@@ -5,6 +5,9 @@
 ## Wireframe link: 
 * https://wireframe.cc/Qrrq3P
 
+## Deployed site: 
+* https://steven43533.github.io/GA-Project1-VideoGame/
+
 ## Project Ideas:
 ##### Slither.io game, you start with a small snake, there's food on the map, use WASD to move the snake, you can't move backwards tho(collapse into yourself) and you lose if you "eat" yourself. 
 

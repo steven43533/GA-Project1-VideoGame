@@ -15,6 +15,7 @@ let lengthValueDom = document.getElementById('length-of-snake')
 let lengthCounter = 0;
 
 // apple ate audio
+// Not keeping this audio
 audioObj = new Audio("audioStuff/munch.mp3")
 
 // snake constructor 
@@ -51,17 +52,11 @@ canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 // state of game, always start as false until hit a wall/or self cannibalized
 isGameOver = false
 
-
-
 // startButton EL
-
+// TO BE CONTINUED
 
 // resetButton EL
 resetButton.addEventListener('click', resetGame)
-
-
-
-
 
 // main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
@@ -140,7 +135,7 @@ function spawnApple() {
 // checks to see if the snakehead has collided with an apple and moves apple to new position upon true
 // TODO: Improve hit detect of snake head eating apple, not 100% accurate atm.
 function detectAppleAte() {
-    if(appleX == headX && appleY == headY){
+    if(appleX  == headX && appleY  == headY){
         appleX = Math.floor(Math.random() * tileCount)
         appleY = Math.floor(Math.random() * tileCount) 
         snakeLength++
@@ -160,6 +155,8 @@ function checkForSnakeAteItself() {
     }
 }
 
+
+// if snake head goes past boundaries of canvas(width/height) then the game loop ends and shows a game over message
 function checkForGameOver() {
     if(headX * tileCount + tileSize > canvas.width + 10|| headY * tileCount + tileSize > canvas.height + 10||
         headY < 0 || headX < 0){
