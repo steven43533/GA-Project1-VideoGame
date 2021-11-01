@@ -15,13 +15,13 @@
 * A snake, a board with borders, a textbox showing length(one food ate -> length++), start button, results box after game is over, reset game button), announcer box.
 
 
-## MVP goals: 
+## MVP goals: Completed
 * Start screen 
 * snake moves 
 * snake length increases with each food ate
 * food spawns at a new location if previous is ate
 * boundaries are set to snake can't go off screen
-* if snake runs into itself it dies. 
+
 
 
 ## Stretched goals: 

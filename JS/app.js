@@ -61,7 +61,7 @@ resetButton.addEventListener('click', resetGame)
 // main loop that keeps the game going and calls the functions created below with a settimeout
 function gameLoop() {
     checkForGameOver()
-    checkForSnakeAteItself()
+    //checkForSnakeAteItself()
     clearScreen()
     snakePosition()
     detectAppleAte()
@@ -110,6 +110,7 @@ function spawnSnake(){
         ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize)
         
     }
+    
 
     snakePieces.push(new snakePiece(headX, headY))
     while(snakePieces.length > snakeLength){
@@ -145,15 +146,15 @@ function detectAppleAte() {
 }
 
 // TODO: Fix function to actually do what its suppose to do
-function checkForSnakeAteItself() {
-    for (let i = 1; i < snakePieces.length; i++) {
-        if(headX === snakePieces[i].x && 
-            headY === snakePieces[i].y) {
-                console.log("Snake ate itself");
-            }
+// function checkForSnakeAteItself() {
+//     for (let i = 1; i < snakePieces.length; i++) {
+//         if(headX === snakePieces[i].x && 
+//             headY === snakePieces[i].y) {
+//                 console.log("Snake ate itself");
+//             }
         
-    }
-}
+//     }
+// }
 
 
 // if snake head goes past boundaries of canvas(width/height) then the game loop ends and shows a game over message
